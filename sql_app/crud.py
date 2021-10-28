@@ -1,14 +1,14 @@
 from sqlalchemy.sql import select
 
-import schemas
-import database
-from models import documents
+from .database import engine
+from .models import documents
+from .schemas import DocumentCreate
 
 
-connection = database.engine.connect()
+connection = engine.connect()
 
 
-def create_document(item: schemas.DocumentCreate):
+def create_document(item: DocumentCreate):
     document = documents.insert().values(**item.dict())
     result = connection.execute(document)
     id = result.inserted_primary_key[0]

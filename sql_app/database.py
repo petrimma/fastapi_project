@@ -9,8 +9,9 @@ from sqlalchemy.orm import sessionmaker
 load_dotenv()
 
 SQLALCHEMY_DATABASE_URL = (f"postgresql://{os.environ.get('POSTGRES_USER')}:"
-                           f"{os.environ.get('POSTGRES_PASSWORD')}@localhost/"
-                           f"{os.environ.get('POSTGRES_NAME')}")
+                           f"{os.environ.get('POSTGRES_PASSWORD')}@"
+                           f"{os.environ.get('DB_HOST')}/"
+                           f"{os.environ.get('DB_NAME')}")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

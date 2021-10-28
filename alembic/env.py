@@ -1,3 +1,5 @@
+import os
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -5,9 +7,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-import os
-
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -20,9 +21,13 @@ config = context.config
 
 
 section = config.config_ini_section
-config.set_section_option(section, "POSTGRES_USER", os.environ.get('POSTGRES_USER'))
-config.set_section_option(section, "DB_PASS", os.environ.get('POSTGRES_PASSWORD'))
-config.set_section_option(section, "POSTGRES_PASSWORD", os.environ.get('POSTGRES_NAME'))
+config.set_section_option(section, "POSTGRES_USER",
+                          os.environ.get('POSTGRES_USER'))
+config.set_section_option(section, "POSTGRES_PASSWORD",
+                          os.environ.get('POSTGRES_PASSWORD'))
+config.set_section_option(section, "DB_NAME", os.environ.get('DB_NAME'))
+config.set_section_option(section, "DB_HOST", os.environ.get('DB_HOST'))
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -60,7 +65,7 @@ def run_migrations_offline():
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
-        #compare_type=True,
+        # compare_type=True,
     )
 
     with context.begin_transaction():
