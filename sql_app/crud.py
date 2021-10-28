@@ -20,9 +20,12 @@ def get_document(document_id: int):
     s = select(documents).where(documents.c.id == document_id)
     result = connection.execute(s)
     document = result.fetchone()
+    if document is None:
+        return None
     return document
 
 
 def delete_document(document_id: int):
     document = documents.delete().where(documents.c.id == document_id)
-    return connection.execute(document)
+    result = connection.execute(document)
+    return result
