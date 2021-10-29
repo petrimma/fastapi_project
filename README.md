@@ -19,7 +19,7 @@ DB_PORT=5432
 
 Start project:
 ```
-docker-compose up –d
+docker-compose up
 ```
 
 Documentation:
